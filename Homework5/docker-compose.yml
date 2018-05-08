@@ -1,0 +1,26 @@
+version: '2'
+services:
+    webserver:
+        build: ./docker/webserver
+        image: apache-webserver
+        ports: 
+            - "8080:8080"
+            - "443:443"
+            - "80:80"
+        links:
+            - db
+        volumes:
+            - /Users/Isaac/Documents/Csec380/Homework5/www:/var/www/armbook/
+        networks:
+            - default
+    db:
+        image: mysql
+        ports: 
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: armbook
+            MYSQL_USER: user
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - default

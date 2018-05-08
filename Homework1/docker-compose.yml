@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  webserver1:
+    build: ./web
+    container_name: webserver1
+    hostname: webserver1
+    volumes:
+     - ./web/www:/usr/share/nginx/html
+  webserver2:
+    build: ./web
+    container_name: webserver2
+    hostname: webserver2
+    volumes:
+      - ./web/www:/usr/share/nginx/html
+
+  loadbalancer:
+    build: ./loadbalancer
+    container_name: loadbalancer
+    hostname: loadbalancer
+    ports:
+      - "80:80"
+    links:
+      - webserver1
+      - webserver2
+
+  cache:
+    build: ./cache
+    container_name: cache
+    hostname: varnish
+    ports:
+     - "8080:80"
+    depends_on:
+      - loadbalancer
+    links:
+      - webserver1
+      - webserver2
+    volumes:
+      - ./cache/nginx.conf:/etc/nginx/nginx.conf
